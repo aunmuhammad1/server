@@ -1,12 +1,13 @@
 import express from 'express';
 const app = express();
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
-require('./student');
+import mongoose from 'mongoose';
+import bodyParser from 'body-parser';
+import student from './student.js';
+
+const Student = mongoose.model('Student', student);
 
 app.use(bodyParser.json());
 
-const Student = mongoose.model('Student');
 
 const mongooseurl = 'mongodb+srv://physicsbook:VyjXsryB2p8VRrgX@cluster0.pjsmtiy.mongodb.net/?retryWrites=true&w=majority'
 

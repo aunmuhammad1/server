@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const Studentschema = new mongoose.Schema({
 
@@ -29,5 +29,6 @@ const Studentschema = new mongoose.Schema({
     }
 });
 
-mongoose.model('Student', Studentschema);
+
+export default Studentschema;
 

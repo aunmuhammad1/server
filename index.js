@@ -31,6 +31,19 @@ app.get('/', (req, res) => {
     }
 );
 
+// add code check for existing email
+
+app.get('/get-data', (req, res) => {
+    Student.find({}).then(data => {
+        console.log(data)
+        res.send(data)
+    }).catch(err => {
+        console.log(err)
+    })
+}
+);
+
+
 app.post('/send-data', (req, res) => {
     const student = new Student({
         name: req.body.name,

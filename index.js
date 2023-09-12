@@ -3,8 +3,10 @@ const app = express();
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import student from './student.js';
+import makePayment from './makePayment.js';
 
 const Student = mongoose.model('Student', student);
+const MakePayment = mongoose.model('MakePayment', makePayment);
 
 app.use(bodyParser.json());
 
@@ -30,6 +32,22 @@ app.get('/', (req, res) => {
     res.end();
     }
 );
+
+app.post('/make-payment', (req, res) => {
+    const makePayment = new MakePayment({
+        studentData: req.body.studentData,
+        pending: req.body.pending,
+    })
+    makePayment.save()
+        .then(data => {
+            console.log(data)
+            res.send("Success")
+        }).catch(err => {
+            console.log(err)
+        })
+    // res.send("Success");
+});
+
 
 // add code check for existing email
 

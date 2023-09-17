@@ -4,15 +4,15 @@ import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import student from './student.js';
 import makePayment from './makePayment.js';
+import confirmPayment from './confirmpayment.js';
 
 const Student = mongoose.model('Student', student);
 const MakePayment = mongoose.model('MakePayment', makePayment);
+const ConfirmPayment = mongoose.model('ConfirmPayment', confirmPayment);
 
 app.use(bodyParser.json());
 
-
 const mongooseurl = 'mongodb+srv://physicsbook:VyjXsryB2p8VRrgX@cluster0.pjsmtiy.mongodb.net/?retryWrites=true&w=majority'
-
 
 mongoose.connect(mongooseurl, {
     useNewUrlParser: true,
@@ -55,10 +55,7 @@ app.get('/check-payment', (req, res) => {
     }).catch(err => {
         console.log(err)
     })
-}
-);
-
-// add code check for existing email
+});
 
 app.get('/get-data', (req, res) => {
     Student.find({}).then(data => {
@@ -67,9 +64,7 @@ app.get('/get-data', (req, res) => {
     }).catch(err => {
         console.log(err)
     })
-}
-);
-
+});
 
 app.post('/send-data', (req, res) => {
     const student = new Student({
@@ -92,6 +87,30 @@ app.post('/send-data', (req, res) => {
     console.log(error);
 });
 
+app.post('/confirm-payment', (req, res) => {
+    const confirmPayment = new ConfirmPayment({
+        studentData: req.body.studentData,
+        prove: req.body.prove,
+        access: req.body.access,
+    })
+    confirmPayment.save()
+        .then(data => {
+            console.log(data)
+            res.send("Success")
+        }).catch(err => {
+            console.log(err)
+        })
+    // res.send("Success");
+});
+
+app.get('/get-confirm-payment', (req, res) => {
+    ConfirmPayment.find({}).then(data => {
+        console.log(data)
+        res.send(data)
+    }).catch(err => {
+        console.log(err)
+    })
+});
 
 app.listen(9000, () => {
     console.log("Server running on port 9000");

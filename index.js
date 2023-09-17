@@ -52,7 +52,7 @@ app.put('/update-payment', (req, res) => {
     const id = req.body.email;
     MakePayment.findOneAndUpdate(
         { "studentData.email": id },
-        { $set: { pending: false } },
+        { $set: { "pending": false } },
         { new: true }
     ).then(data => {
         console.log(data)

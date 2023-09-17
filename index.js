@@ -48,6 +48,16 @@ app.post('/make-payment', (req, res) => {
     // res.send("Success");
 });
 
+app.get('/update-payment', (req, res) => {
+    MakePayment.updateOne({studentData: req.body.studentData}, {pending: false})
+    .then(data => {
+        console.log(data)
+        res.send(data)
+    }).catch(err => {
+        console.log(err)
+    })
+});
+
 app.get('/check-payment', (req, res) => {
     MakePayment.find({}).then(data => {
         console.log(data)

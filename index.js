@@ -50,10 +50,9 @@ app.post('/make-payment', (req, res) => {
 
 app.put('/update-payment', (req, res) => {
     const id = req.body.email;
-    MakePayment.findOneAndUpdate(
+    MakePayment.updateOne(
         { "studentData.email": id },
-        { $set: { "pending": false } },
-        { new: true }
+        { $set: { "pending": false } }
     ).then(data => {
         console.log(data)
         res.send(data)

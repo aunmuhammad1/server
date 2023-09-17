@@ -48,9 +48,13 @@ app.post('/make-payment', (req, res) => {
     // res.send("Success");
 });
 
-app.get('/update-payment', (req, res) => {
-    MakePayment.updateOne({studentData: req.body.studentData}, {pending: false})
-    .then(data => {
+app.put('/update-payment', (req, res) => {
+    const id = req.body.email;
+    MakePayment.findOneAndUpdate(
+        { "studentData.email": id },
+        { $set: { pending: false } },
+        { new: true }
+    ).then(data => {
         console.log(data)
         res.send(data)
     }).catch(err => {
